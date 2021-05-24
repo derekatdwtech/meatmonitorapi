@@ -26,7 +26,7 @@ namespace meatmonitorapi.Controllers
         }
 
         [HttpPost]
-        public TempReading UpdateTemperature(TempReading tr) {
+        public TempTableEntity UpdateTemperature(TempReading tr) {
             return _tr.UpdateTemperature(tr);
         }
     }

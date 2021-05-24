@@ -4,6 +4,6 @@ using meatmonitorapi.Models;
 namespace meatmonitorapi.repository {
     public interface ITemperature {
         TempReading GetLatestTemperature();
-        TempReading UpdateTemperature (TempReading tr);
+        TempTableEntity UpdateTemperature (TempReading tr);
     }
 }

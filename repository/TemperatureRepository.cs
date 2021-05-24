@@ -1,6 +1,10 @@
+using System;
+using System.Diagnostics;
+using System.Globalization;
 using meatmonitorapi.Models;
 using meatmonitorapi.utils;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace meatmonitorapi.repository {
     public class TemperatureRepository : ITemperature
@@ -16,11 +20,21 @@ namespace meatmonitorapi.repository {
             throw new System.NotImplementedException();
         }
 
-        public TempReading UpdateTemperature(TempReading tr)
+        public TempTableEntity UpdateTemperature(TempReading tr)
         {
-            var tableClient = new AzureTableStorage<TempReading>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:TemperatureReadingTable"]);
+            var timestamp = new DateTimeOffset(Convert.ToDateTime(tr.time));
 
-            return tableClient.InsertOrUpdateAsync(tr).Result;
+            var insert = new TempTableEntity() {
+                name = tr.name,
+                temp_c = tr.temperature.c.ToString(),
+                temp_f = tr.temperature.f.ToString(),
+                time = tr.time,
+                Timestamp = timestamp,
+                RowKey = tr.time
+            };
+            Console.WriteLine($"{JsonConvert.SerializeObject(insert)}");
+            var tableClient = new AzureTableStorage<TempTableEntity>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:TemperatureReadingTable"]);
+            return tableClient.InsertOrUpdateAsync(insert).Result;
         }
     }
 }

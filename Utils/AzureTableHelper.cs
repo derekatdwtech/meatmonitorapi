@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
+using Newtonsoft.Json;
 
 namespace meatmonitorapi.utils {
 public class AzureTableStorage<T> where T : ITableEntity, new()
@@ -85,7 +86,8 @@ public class AzureTableStorage<T> where T : ITableEntity, new()
 
     public async Task<T> InsertOrUpdateAsync(T entity)
     {
-        var insertOrReplaceOperation = TableOperation.InsertOrReplace(entity);
+        //Console.WriteLine($"{JsonConvert.SerializeObject(entity)}");
+        var insertOrReplaceOperation = TableOperation.Insert(entity);
         var result = await table.ExecuteAsync(insertOrReplaceOperation);
 
         if (result == null || result.Result == null)

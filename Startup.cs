@@ -32,7 +32,7 @@ namespace meatmonitorapi
             services.AddSwaggerGen();
             services.AddHttpClient();
             services.AddScoped<IProbeConfig, ProbeConfigRepository>();
-
+            services.AddScoped<ITemperature, TemperatureRepository>();
 
 
         }

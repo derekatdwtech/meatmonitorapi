@@ -1,21 +1,33 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.WindowsAzure.Storage.Table;
 
 namespace meatmonitorapi.Models
 {
-    public class TempReading : TableEntity {
+    public class TempTableEntity : TableEntity
+    {
 
-        public TempReading() {
-            RowKey = time.ToString();
+        public TempTableEntity()
+        {
+            PartitionKey = "temperatureReadings";
         }
-        public string name {get; set;}
-        public DateTime time { get; set;}
-        public Temperature temperature {get; set;}
+
+        public string name { get; set; }
+        public string time { get; set; }
+        public string temp_c { get; set; }
+        public string temp_f { get; set; }
+    }
+
+    public class TempReading
+    {
+        public string name { get; set; }
+        public string time { get; set; }
+        public Temperature temperature { get; set; }
     }
 
     public class Temperature
     {
-        public float f {get; set;}
-        public float c {get; set;}
+        public decimal f { get; set; }
+        public decimal c { get; set; }
     }
 }
