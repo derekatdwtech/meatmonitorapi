@@ -33,6 +33,7 @@ namespace meatmonitorapi
             services.AddHttpClient();
             services.AddScoped<IProbeConfig, ProbeConfigRepository>();
             services.AddScoped<ITemperature, TemperatureRepository>();
+            services.AddScoped<IAlertConfig, AlertConfigRepository>();
 
 
         }
