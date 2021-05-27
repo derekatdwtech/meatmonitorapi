@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using meatmonitorapi.Models;
 using meatmonitorapi.repository;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,11 @@ namespace meatmonitorapi.Controllers
         {
             return _tr.GetLatestTemperature();
            
+        }
+
+        [HttpGet]
+        public List<TempTableEntity> GetTempReadingBetweenDates(string startTime, string endTime) {
+            return _tr.GetTemperatureBetweenTime(startTime, endTime);
         }
 
         [HttpPost]
