@@ -27,8 +27,8 @@ namespace meatmonitorapi.Controllers
         }
 
         [HttpGet]
-        public List<TempTableEntity> GetTempReadingBetweenDates(string startTime, string endTime) {
-            return _tr.GetTemperatureBetweenTime(startTime, endTime);
+        public List<TempTableEntity> GetTempReadingBetweenDates(string probeName, string startTime, string endTime) {
+            return _tr.GetTemperatureBetweenTime(probeName, startTime, endTime);
         }
 
         [HttpPost]

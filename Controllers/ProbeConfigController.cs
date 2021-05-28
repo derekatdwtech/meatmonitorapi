@@ -22,7 +22,7 @@ namespace meatmonitorapi.Controllers
         }
 
         [HttpGet("{id}")]
-        public ProbeConfig Get(Guid id)
+        public ProbeConfig Get(string id)
         {
             return _pcr.GetProbeConfig(id);
            

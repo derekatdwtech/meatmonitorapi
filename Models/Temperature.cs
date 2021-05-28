@@ -9,7 +9,7 @@ namespace meatmonitorapi.Models
 
         public TempTableEntity()
         {
-            PartitionKey = "temperatureReadings";
+
         }
 
         public string name { get; set; }

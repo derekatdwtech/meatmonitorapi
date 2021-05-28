@@ -6,6 +6,6 @@ namespace meatmonitorapi.repository {
     public interface ITemperature {
         TempReading GetLatestTemperature();
         TempTableEntity UpdateTemperature (TempReading tr);
-        List<TempTableEntity> GetTemperatureBetweenTime(string startTime, string endTime);
+        List<TempTableEntity> GetTemperatureBetweenTime(string probeName, string startTime, string endTime);
     }
 }

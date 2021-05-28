@@ -27,14 +27,12 @@ public class AzureTableStorage<T> where T : ITableEntity, new()
         table.CreateIfNotExistsAsync().GetAwaiter().GetResult();
     }
 
-    public async Task<T> Get(Guid id)
+    public async Task<T> Get(string partitionKey, string rowKey)
     {
-        //Please note: This assumes that the entity's id is a guid, and that our table is partitioned on the first character in the id.
-        var rowKey = id.ToString();
 
         TableQuery<T> query = new TableQuery<T>().Where(
         TableQuery.CombineFilters(
-            TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, rowKey),
+            TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey),
             TableOperators.And,
             TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, rowKey))).Take(1);
 

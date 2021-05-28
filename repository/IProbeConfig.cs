@@ -3,7 +3,7 @@ using meatmonitorapi.Models;
 
 namespace meatmonitorapi.repository {
     public interface IProbeConfig {
-        ProbeConfig GetProbeConfig(Guid id);
+        ProbeConfig GetProbeConfig(string rowKey);
         ProbeConfig UpdateProbeConfig (ProbeConfig pc);
     }
 }

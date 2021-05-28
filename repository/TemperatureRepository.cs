@@ -24,13 +24,16 @@ namespace meatmonitorapi.repository
             throw new System.NotImplementedException();
         }
 
-        public List<TempTableEntity> GetTemperatureBetweenTime(string startTime, string endTime)
+        public List<TempTableEntity> GetTemperatureBetweenTime(string probeName, string startTime, string endTime)
         {
             TableQuery<TempTableEntity> query = new TableQuery<TempTableEntity>().Where(
             TableQuery.CombineFilters(
+                TableQuery.CombineFilters(
                 TableQuery.GenerateFilterCondition("time", QueryComparisons.GreaterThanOrEqual, startTime),
                 TableOperators.And,
-                TableQuery.GenerateFilterCondition("time", QueryComparisons.LessThanOrEqual, endTime)));
+                TableQuery.GenerateFilterCondition("time", QueryComparisons.LessThanOrEqual, endTime)),
+                TableOperators.And,
+                TableQuery.GenerateFilterCondition("name", QueryComparisons.Equal, probeName)));
 
             var tableClient = new AzureTableStorage<TempTableEntity>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:TemperatureReadingTable"]);
             return tableClient.GetMany(query).Result;
@@ -49,7 +52,8 @@ namespace meatmonitorapi.repository
                 temp_f = tr.temperature.f.ToString(),
                 time = tr.time,
                 Timestamp = timestamp,
-                RowKey = tr.time
+                RowKey = tr.time,
+                PartitionKey = tr.name
             };
             Console.WriteLine($"{JsonConvert.SerializeObject(insert)}");
             var tableClient = new AzureTableStorage<TempTableEntity>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:TemperatureReadingTable"]);

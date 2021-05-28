@@ -7,9 +7,8 @@ namespace meatmonitorapi.Models {
     public class ProbeConfig : TableEntity {
 
         public ProbeConfig() {
-
+            PartitionKey = "probeconfig";
         }
-
         public int readingIntervalInSeconds {get; set;}
         public int tempThresholdInCelcius {get;set;}
        

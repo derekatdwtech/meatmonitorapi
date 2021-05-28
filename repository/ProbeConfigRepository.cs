@@ -7,13 +7,14 @@ namespace meatmonitorapi.repository {
     public class ProbeConfigRepository : IProbeConfig
     {
         private readonly IConfiguration _config;
+        private string probePartition = "probeconfig";
         public ProbeConfigRepository(IConfiguration config) {
             _config = config;
         }
-        public ProbeConfig GetProbeConfig(Guid id)
+        public ProbeConfig GetProbeConfig(string rowKey)
         {
             var tableClient = new AzureTableStorage<ProbeConfig>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:ProbeConfigTable"]);
-            return tableClient.Get(id).Result;
+            return tableClient.Get(probePartition, rowKey).Result;
         }
 
         public ProbeConfig UpdateProbeConfig(ProbeConfig pc)

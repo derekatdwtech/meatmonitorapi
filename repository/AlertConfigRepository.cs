@@ -40,7 +40,7 @@ namespace meatmonitorapi.repository
                     Console.WriteLine("Successfully matched phone number");
                     var insert = new AlertConfigEntity()
                     {
-                        RowKey = pc.phoneNumber,
+                        RowKey = pc.id,
                         firstName = pc.firstName,
                         lastName = pc.lastName,
                         phoneNumber = pc.phoneNumber
