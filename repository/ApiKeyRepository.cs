@@ -23,8 +23,11 @@ namespace tempaastapi.repository
             _tableClient = new AzureTableStorage<ApiKeyEntity>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:ApiKeyTable"]);
 
         }
-        public void DeleteApiKey(string id, string key)
+        public async void DeleteApiKey(string id, string key)
         {
+            var entity = _tableClient.Get(id, key).Result;
+
+            await _tableClient.Delete(entity);
         }
 
         public ApiKeyEntity GenerateApiKey(string id)

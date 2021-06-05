@@ -6,6 +6,7 @@ using tempaastapi.Models;
 using tempaastapi.repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace tempaastapi.Controllers
 {
@@ -29,9 +30,20 @@ namespace tempaastapi.Controllers
         }
 
         [HttpPost("")]
-        public ApiKeyEntity UpdateApiKey(string userId)
+        public ApiKeyEntity GenerateApiKey(string userId)
         {
             return _akr.GenerateApiKey(userId);
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteApiKey(string userId, string apiKey) {
+            try {
+                _akr.DeleteApiKey(userId, apiKey);
+                return Ok();
+            }
+            catch (Exception e) {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
