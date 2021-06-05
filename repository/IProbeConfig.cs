@@ -1,7 +1,7 @@
 using System;
-using meatmonitorapi.Models;
+using tempaastapi.Models;
 
-namespace meatmonitorapi.repository {
+namespace tempaastapi.repository {
     public interface IProbeConfig {
         ProbeConfig GetProbeConfig(string rowKey);
         ProbeConfig UpdateProbeConfig (ProbeConfig pc);

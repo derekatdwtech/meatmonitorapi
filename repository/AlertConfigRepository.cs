@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using meatmonitorapi.Models;
-using meatmonitorapi.utils;
+using tempaastapi.Models;
+using tempaastapi.utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 
-namespace meatmonitorapi.repository
+namespace tempaastapi.repository
 {
     public class AlertConfigRepository : IAlertConfig
     {

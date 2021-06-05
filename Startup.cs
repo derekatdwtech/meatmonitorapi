@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using meatmonitorapi.repository;
+using tempaastapi.repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace meatmonitorapi
+namespace tempaastapi
 {
     public class Startup
     {
@@ -34,6 +34,7 @@ namespace meatmonitorapi
             services.AddScoped<IProbeConfig, ProbeConfigRepository>();
             services.AddScoped<ITemperature, TemperatureRepository>();
             services.AddScoped<IAlertConfig, AlertConfigRepository>();
+            services.AddScoped<IApiKey, ApiKeyRepository>();
 
 
         }

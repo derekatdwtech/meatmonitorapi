@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using meatmonitorapi.Models;
+using tempaastapi.Models;
 
-namespace meatmonitorapi.repository {
+namespace tempaastapi.repository {
     public interface IAlertConfig {
         List<AlertConfigEntity> GetAllAlertConfig(string partitionKey);
         AlertConfigEntity UpdateAlertConfig (AlertConfig pc);

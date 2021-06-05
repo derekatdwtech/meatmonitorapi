@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "meatmonitorapi": {
+    "tempaastapi": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",

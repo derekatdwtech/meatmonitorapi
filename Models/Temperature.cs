@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace meatmonitorapi.Models
+namespace tempaastapi.Models
 {
     public class TempTableEntity : TableEntity
     {

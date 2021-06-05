@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using meatmonitorapi.Models;
-using meatmonitorapi.repository;
+using tempaastapi.Models;
+using tempaastapi.repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace meatmonitorapi.Controllers
+namespace tempaastapi.Controllers
 {
     [ApiController]
     [Route("probe/config")]

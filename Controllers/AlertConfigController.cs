@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using meatmonitorapi.Models;
-using meatmonitorapi.repository;
+using tempaastapi.Models;
+using tempaastapi.repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace meatmonitorapi.Controllers
+namespace tempaastapi.Controllers
 {
     [ApiController]
-    [Route("alert/config")]
+    [Route("alert/")]
     public class AlertConfigController : ControllerBase
     {
         private readonly ILogger<AlertConfigController> _logger;
@@ -21,16 +21,24 @@ namespace meatmonitorapi.Controllers
             _acr = acr;
         }
 
-        [HttpGet("{key}")]
+// CONFIGURATIONS
+        [HttpGet("config/{key}")]
         public List<AlertConfigEntity> GetAll(string key)
         {
             return _acr.GetAllAlertConfig(key);
            
         }
 
-        [HttpPost]
+        [HttpPost("config")]
         public AlertConfigEntity UpdateAlertConfig(AlertConfig pc) {
             return _acr.UpdateAlertConfig(pc);
         }
+        
+// SUPPRESSIONS
+        [HttpGet("{key}/suppressions")]
+        public string GetAlertSuppressions(string key) {
+            return key;
+        }
+
     }
 }

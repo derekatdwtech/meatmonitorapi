@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using meatmonitorapi.Models;
-using meatmonitorapi.utils;
+using tempaastapi.Models;
+using tempaastapi.utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 
-namespace meatmonitorapi.repository
+namespace tempaastapi.repository
 {
     public class TemperatureRepository : ITemperature
     {

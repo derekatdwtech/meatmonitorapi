@@ -4,7 +4,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 
-namespace meatmonitorapi.Models {
+namespace tempaastapi.Models {
     public class AlertConfigEntity : TableEntity {
 
         public AlertConfigEntity() {

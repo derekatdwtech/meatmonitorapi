@@ -1,9 +1,10 @@
 using System;
-using meatmonitorapi.Models;
-using meatmonitorapi.utils;
+using tempaastapi.Models;
+using tempaastapi.utils;
 using Microsoft.Extensions.Configuration;
+using tempaastapi.attributes;
 
-namespace meatmonitorapi.repository {
+namespace tempaastapi.repository {
     public class ProbeConfigRepository : IProbeConfig
     {
         private readonly IConfiguration _config;
@@ -11,6 +12,7 @@ namespace meatmonitorapi.repository {
         public ProbeConfigRepository(IConfiguration config) {
             _config = config;
         }
+
         public ProbeConfig GetProbeConfig(string rowKey)
         {
             var tableClient = new AzureTableStorage<ProbeConfig>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:ProbeConfigTable"]);

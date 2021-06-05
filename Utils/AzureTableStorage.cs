@@ -5,7 +5,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 
-namespace meatmonitorapi.utils {
+namespace tempaastapi.utils {
 public class AzureTableStorage<T> where T : ITableEntity, new()
 {
     private readonly CloudStorageAccount storageAccount;
