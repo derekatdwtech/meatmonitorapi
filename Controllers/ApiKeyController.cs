@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace tempaastapi.Controllers
 {
     [ApiController]
-    [Route("key")]
+    [Route("api/key")]
     public class ApiKeyController : ControllerBase
     {
         private readonly ILogger<ApiKeyController> _logger;
