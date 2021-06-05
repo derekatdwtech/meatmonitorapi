@@ -11,6 +11,7 @@ namespace tempaastapi.Models {
         }
         public int readingIntervalInSeconds {get; set;}
         public int tempThresholdInCelcius {get;set;}
+        public string userId {get; set;}
        
     }
 }

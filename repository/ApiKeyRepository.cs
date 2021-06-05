@@ -26,7 +26,6 @@ namespace tempaastapi.repository
         public async void DeleteApiKey(string id, string key)
         {
             var entity = _tableClient.Get(id, key).Result;
-
             await _tableClient.Delete(entity);
         }
 

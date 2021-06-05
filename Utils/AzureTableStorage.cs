@@ -98,7 +98,6 @@ public class AzureTableStorage<T> where T : ITableEntity, new()
     {
         var deleteOperation = TableOperation.Delete(entity);
         var result = await table.ExecuteAsync(deleteOperation);
-
         return (T)result.Result;
     }
 
