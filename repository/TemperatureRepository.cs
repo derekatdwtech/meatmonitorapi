@@ -35,7 +35,7 @@ namespace tempaastapi.repository
                 TableOperators.And,
                 TableQuery.GenerateFilterCondition("name", QueryComparisons.Equal, probeName)));
 
-            var tableClient = new AzureTableStorage<TempTableEntity>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:TemperatureReadingTable"]);
+            var tableClient = new AzureTableStorage<TempTableEntity>(_config["ConnectionStrings:StorageAccount"], _config["TemperatureReadingTable"]);
             return tableClient.GetMany(query).Result;
 
 
@@ -56,7 +56,7 @@ namespace tempaastapi.repository
                 PartitionKey = tr.name
             };
             Console.WriteLine($"{JsonConvert.SerializeObject(insert)}");
-            var tableClient = new AzureTableStorage<TempTableEntity>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:TemperatureReadingTable"]);
+            var tableClient = new AzureTableStorage<TempTableEntity>(_config["ConnectionStrings:StorageAccount"], _config["TemperatureReadingTable"]);
             return tableClient.InsertOrUpdateAsync(insert).Result;
         }
     }

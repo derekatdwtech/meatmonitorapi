@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using tempaastapi.swagger;
 
 namespace tempaastapi
 {
@@ -29,7 +30,9 @@ namespace tempaastapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c => {
+                c.OperationFilter<ApiKeyFilter>();
+            });
             services.AddHttpClient();
             services.AddScoped<IProbeConfig, ProbeConfigRepository>();
             services.AddScoped<ITemperature, TemperatureRepository>();
@@ -53,7 +56,8 @@ namespace tempaastapi
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Meat Monitor API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tempaast Api");
+                
             });
 
             //app.UseHttpsRedirection();

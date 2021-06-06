@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;  
+
 
 namespace tempaastapi
 {
@@ -18,6 +15,10 @@ namespace tempaastapi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((context, config)=> {
+                    var root = config.Build();
+                    config.AddAzureKeyVault($"https://{Environment.GetEnvironmentVariable("KeyVaultName")}.vault.azure.net/", Environment.GetEnvironmentVariable("KeyVaultClientId"), Environment.GetEnvironmentVariable("KeyVaultClientSecret"));
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "tempaast",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,10 +20,13 @@
     "tempaastapi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "tempaast",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "KeyVaultClientId": "9813cdfe-53ec-4e4c-85f5-851089a5ebaf",
+        "KeyVaultClientSecret": "~sTt94pfHuF5ODqB4PI.rrz5fh..2eM.l.",
+        "KeyVaultName": "tempaast-kv"
       }
     }
   }

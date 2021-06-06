@@ -15,13 +15,13 @@ namespace tempaastapi.repository {
 
         public ProbeConfig GetProbeConfig(string rowKey)
         {
-            var tableClient = new AzureTableStorage<ProbeConfig>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:ProbeConfigTable"]);
+            var tableClient = new AzureTableStorage<ProbeConfig>(_config["ConnectionStrings:StorageAccount"], _config["ProbeConfigTable"]);
             return tableClient.Get(probePartition, rowKey).Result;
         }
 
         public ProbeConfig UpdateProbeConfig(ProbeConfig pc)
         {
-            var tableClient = new AzureTableStorage<ProbeConfig>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:ProbeConfigTable"]);
+            var tableClient = new AzureTableStorage<ProbeConfig>(_config["ConnectionStrings:StorageAccount"], _config["ProbeConfigTable"]);
 
             return tableClient.InsertOrUpdateAsync(pc).Result;
         }

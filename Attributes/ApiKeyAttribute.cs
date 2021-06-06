@@ -8,20 +8,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage.Table;
 using tempaastapi.Models;
 using tempaastapi.utils;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace tempaastapi.attributes
 {
 
-    [AttributeUsage(validOn: AttributeTargets.Method)]
-    sealed class ApiKeyAttribute : Attribute
+    [AttributeUsage(validOn: AttributeTargets.Class | AttributeTargets.Method)]
+    sealed class ApiKeyAttribute : Attribute, IAsyncActionFilter
     {
         private const string APIKEYNAME = "Api-Key";
-        private readonly IConfiguration _config;
-
-        public ApiKeyAttribute()
-        {
-
-        }
+        public string userId { get; set; }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
@@ -35,9 +31,10 @@ namespace tempaastapi.attributes
                 return;
             }
 
-            
-            var apiKey = GetApiKeyByValue(extractedApiKey);
-
+            var config = context.HttpContext.RequestServices.GetService<IConfiguration>();
+            var connString = config.GetValue<string>("StorageAccountConnString");
+            var tableName = config.GetValue<string>("ApiKeyTable");
+            var apiKey = GetApiKeyByValue(extractedApiKey, connString, tableName);
             if (apiKey.Count < 1)
             {
                 context.Result = new ContentResult()
@@ -47,21 +44,27 @@ namespace tempaastapi.attributes
                 };
                 return;
             }
+            else
+            {
+                config["UserId"] = apiKey[0].userId;
+            }
 
             await next();
         }
 
-        private List<ApiKeyEntity> GetApiKeyByValue(string key) {
-            AzureTableStorage<ApiKeyEntity> _tableClient = new AzureTableStorage<ApiKeyEntity>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:ApiKeyTable"]);
-            DateTime now = new DateTime();
-            string isoTime = now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
+
+
+        private List<ApiKeyEntity> GetApiKeyByValue(string key, string connString, string table)
+        {
+            AzureTableStorage<ApiKeyEntity> _tableClient = new AzureTableStorage<ApiKeyEntity>(connString, table);
+            DateTime now = DateTime.UtcNow;
+
             TableQuery<ApiKeyEntity> _query = new TableQuery<ApiKeyEntity>().Where(
                 TableQuery.CombineFilters(
-                TableQuery.GenerateFilterCondition("ApiKey", QueryComparisons.Equal, key),
+                TableQuery.GenerateFilterCondition("apiKey", QueryComparisons.Equal, key),
                 TableOperators.And,
-                TableQuery.GenerateFilterCondition("expirationDate", QueryComparisons.GreaterThanOrEqual, isoTime))
+                TableQuery.GenerateFilterConditionForDate("expirationDate", QueryComparisons.GreaterThan, now))
             );
-
             var foundKey = _tableClient.GetMany(_query).Result;
 
             return foundKey;

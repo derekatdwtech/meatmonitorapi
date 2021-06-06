@@ -25,7 +25,7 @@ namespace tempaastapi.repository
             TableQuery<AlertConfigEntity> query = new TableQuery<AlertConfigEntity>().Where(
             TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey));
 
-            var tableClient = new AzureTableStorage<AlertConfigEntity>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:AlertConfigTable"]);
+            var tableClient = new AzureTableStorage<AlertConfigEntity>(_config["ConnectionStrings:StorageAccount"], _config["AlertConfigTable"]);
             return tableClient.GetMany(query).Result;
         }
 
@@ -46,7 +46,7 @@ namespace tempaastapi.repository
                         phoneNumber = pc.phoneNumber
                     };
 
-                    var tableClient = new AzureTableStorage<AlertConfigEntity>(_config["ConnectionStrings:StorageAccount"], _config["AppSettings:AlertConfigTable"]);
+                    var tableClient = new AzureTableStorage<AlertConfigEntity>(_config["ConnectionStrings:StorageAccount"], _config["AlertConfigTable"]);
                     return tableClient.InsertOrUpdateAsync(insert).Result;
                 }
                 else
