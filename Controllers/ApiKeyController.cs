@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using tempaastapi.Models;
 using tempaastapi.repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Http;
 using tempaastapi.attributes;
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace tempaastapi.Controllers
 {
@@ -27,26 +25,33 @@ namespace tempaastapi.Controllers
             _config = config;
         }
 
-        [ApiKey]
         [HttpGet("")]
+        [Authorize]
         public List<ApiKeyEntity> Get()
         {
-            string id = _config["userId"];            
-            return _akr.GetApiKeyByUser(id);
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value.Split("|")[1];
+            Console.WriteLine(userId);
+            return _akr.GetApiKeyByUser(userId);
 
         }
 
         [HttpPost("")]
-        public ApiKeyEntity GenerateApiKey(string userId)
+        [Authorize]
+        public ApiKeyEntity GenerateApiKey()
         {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value.Split("|")[1];
+
             return _akr.GenerateApiKey(userId);
         }
 
         [HttpDelete]
-        public IActionResult DeleteApiKey(string userId, string apiKey)
+        [Authorize]
+        public IActionResult DeleteApiKey(string apiKey)
         {
             try
             {
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value.Split("|")[1];
+
                 _akr.DeleteApiKey(userId, apiKey);
                 return Ok();
             }
@@ -59,7 +64,7 @@ namespace tempaastapi.Controllers
 
         public static void GetAttribute(Type t)
         {
-            
+
         }
 
     }

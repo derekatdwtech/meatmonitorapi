@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace tempaastapi.Models {
+namespace tempaastapi.Models
+{
     public class ProbeConfig : TableEntity {
 
         public ProbeConfig() {

@@ -12,8 +12,6 @@ namespace tempaastapi.repository
 {
     public class ApiKeyRepository : IApiKey
     {
-
-        private string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
         AzureTableStorage<ApiKeyEntity> _tableClient;
         IConfiguration _config;
 

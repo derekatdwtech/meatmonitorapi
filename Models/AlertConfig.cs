@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
-using Newtonsoft.Json;
 
-namespace tempaastapi.Models {
+namespace tempaastapi.Models
+{
     public class AlertConfigEntity : TableEntity {
 
         public AlertConfigEntity() {

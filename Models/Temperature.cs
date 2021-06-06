@@ -1,5 +1,3 @@
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.WindowsAzure.Storage.Table;
 
 namespace tempaastapi.Models

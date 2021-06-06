@@ -1,10 +1,9 @@
-using System;
 using tempaastapi.Models;
 using tempaastapi.utils;
 using Microsoft.Extensions.Configuration;
-using tempaastapi.attributes;
 
-namespace tempaastapi.repository {
+namespace tempaastapi.repository
+{
     public class ProbeConfigRepository : IProbeConfig
     {
         private readonly IConfiguration _config;

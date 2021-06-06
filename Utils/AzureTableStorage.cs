@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
-using Newtonsoft.Json;
 
-namespace tempaastapi.utils {
-public class AzureTableStorage<T> where T : ITableEntity, new()
+namespace tempaastapi.utils
+{
+    public class AzureTableStorage<T> where T : ITableEntity, new()
 {
     private readonly CloudStorageAccount storageAccount;
     private readonly CloudTableClient tableClient;

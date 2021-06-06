@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using tempaastapi.Models;
 
-namespace tempaastapi.repository {
+namespace tempaastapi.repository
+{
     public interface ITemperature {
         TempReading GetLatestTemperature();
         TempTableEntity UpdateTemperature (TempReading tr);
