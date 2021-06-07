@@ -60,12 +60,5 @@ namespace tempaastapi.Controllers
                 return BadRequest(e.Message);
             }
         }
-
-
-        public static void GetAttribute(Type t)
-        {
-
-        }
-
     }
 }

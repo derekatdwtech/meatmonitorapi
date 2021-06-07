@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using tempaastapi.Models;
 using tempaastapi.repository;
 using Microsoft.AspNetCore.Mvc;
@@ -24,11 +21,10 @@ namespace tempaastapi.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public ProbeConfig Get(string id)
         {
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            Console.WriteLine($"From COntroller {userId}");
+            // string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            // Console.WriteLine($"From COntroller {userId}");
             return _pcr.GetProbeConfig(id);
            
         }
