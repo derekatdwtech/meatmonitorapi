@@ -8,6 +8,7 @@ using tempaastapi.attributes;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using System.Linq;
 
 namespace tempaastapi.Controllers
 {
@@ -35,12 +36,20 @@ namespace tempaastapi.Controllers
 
         }
 
+        [HttpGet("validate")]
+        [ApiKey]
+        public ApiKeyEntity ValidateApiKey()
+        {
+            Request.Headers.TryGetValue("Api-Key", out var apiKey);
+            var keys = _akr.GetApiKeyByUser(_config["UserId"]);
+            return keys.Where(k => k.RowKey == apiKey).FirstOrDefault<ApiKeyEntity>();
+        }
+
         [HttpPost("")]
         [Authorize]
         public ApiKeyEntity GenerateApiKey()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value.Split("|")[1];
-
             return _akr.GenerateApiKey(userId);
         }
 
@@ -51,7 +60,6 @@ namespace tempaastapi.Controllers
             try
             {
                 string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value.Split("|")[1];
-
                 _akr.DeleteApiKey(userId, apiKey);
                 return Ok();
             }
