@@ -22,17 +22,26 @@ namespace tempaastapi.Controllers
             _config = config;
         }
 
-        [HttpGet("{id}")]
-        public ProbeConfig Get(string id)
+        [HttpGet("")]
+        public IActionResult Get(string probeId)
         {
             // string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             // Console.WriteLine($"From COntroller {userId}");
-            return _pcr.GetProbeConfig(_config["UserId"], id);
-           
+            var result = _pcr.GetProbeConfig(_config["UserId"], probeId);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound($"Probe config for {probeId} was not found.");
+            }
+
         }
 
         [HttpPost]
-        public ProbeConfig UpdateProbeConfig(ProbeConfig pc) {
+        public ProbeConfig UpdateProbeConfig(ProbeConfig pc)
+        {
             return _pcr.UpdateProbeConfig(pc);
         }
     }
