@@ -10,7 +10,8 @@ namespace tempaastapi.Models
 
         }
 
-        public string name { get; set; }
+        public string user_id { get; set; }
+        public string probe_id {get;set;}
         public string time { get; set; }
         public string temp_c { get; set; }
         public string temp_f { get; set; }
@@ -18,7 +19,8 @@ namespace tempaastapi.Models
 
     public class TempReading
     {
-        public string name { get; set; }
+        public string probe_id { get; set; }
+        public string user_id {get; set; }
         public string time { get; set; }
         public Temperature temperature { get; set; }
     }

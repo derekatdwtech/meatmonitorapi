@@ -31,7 +31,7 @@ namespace tempaastapi.repository
                 TableOperators.And,
                 TableQuery.GenerateFilterCondition("time", QueryComparisons.LessThanOrEqual, endTime)),
                 TableOperators.And,
-                TableQuery.GenerateFilterCondition("name", QueryComparisons.Equal, probeName)));
+                TableQuery.GenerateFilterCondition("probe_id", QueryComparisons.Equal, probeName)));
 
             var tableClient = new AzureTableStorage<TempTableEntity>(_config["ConnectionStrings:StorageAccount"], _config["TemperatureReadingTable"]);
             return tableClient.GetMany(query).Result;
@@ -45,13 +45,13 @@ namespace tempaastapi.repository
 
             var insert = new TempTableEntity()
             {
-                name = tr.name,
+                probe_id = tr.probe_id,
                 temp_c = tr.temperature.c.ToString(),
                 temp_f = tr.temperature.f.ToString(),
                 time = tr.time,
                 Timestamp = timestamp,
                 RowKey = tr.time,
-                PartitionKey = tr.name
+                PartitionKey = tr.user_id
             };
             Console.WriteLine($"{JsonConvert.SerializeObject(insert)}");
             var tableClient = new AzureTableStorage<TempTableEntity>(_config["ConnectionStrings:StorageAccount"], _config["TemperatureReadingTable"]);
