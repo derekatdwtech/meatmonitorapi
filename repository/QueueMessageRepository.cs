@@ -14,7 +14,9 @@ namespace tempaastapi.repository
         {
             _config = config;
 
-            _client = new QueueClient(_config["ConnectionStrings:StorageAccount"], queueName);
+            _client = new QueueClient(_config["ConnectionStrings:StorageAccount"], queueName, new QueueClientOptions {
+                MessageEncoding = QueueMessageEncoding.Base64
+            });
             _client.CreateIfNotExists();
 
         }
