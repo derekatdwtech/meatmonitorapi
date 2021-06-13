@@ -1,6 +1,8 @@
 using tempaastapi.Models;
 using tempaastapi.utils;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace tempaastapi.repository
 {
@@ -10,6 +12,16 @@ namespace tempaastapi.repository
         public ProbeConfigRepository(IConfiguration config)
         {
             _config = config;
+        }
+
+        public List<ProbeConfig> GetAllProbeConfigs(string userId)
+        {
+            var tableClient = new AzureTableStorage<ProbeConfig>(_config["ConnectionStrings:StorageAccount"], _config["ProbeConfigTable"]);
+            TableQuery<ProbeConfig> query = new TableQuery<ProbeConfig>().Where(
+                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, userId)
+            );
+
+            return tableClient.GetMany(query).Result;
         }
 
         public ProbeConfig GetProbeConfig(string partitionKey, string rowKey)
