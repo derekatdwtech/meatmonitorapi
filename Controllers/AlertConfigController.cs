@@ -31,9 +31,10 @@ namespace tempaastapi.Controllers
         // CONFIGURATIONS
         [HttpGet("config")]
         [Authorize]
-        public List<AlertConfigEntity> GetAll(string key)
+        public List<AlertConfigEntity> GetAll()
         {
-            return _acr.GetAllAlertConfig(key);
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value.Split("|")[1];
+            return _acr.GetAllAlertConfig(userId);
 
         }
 
