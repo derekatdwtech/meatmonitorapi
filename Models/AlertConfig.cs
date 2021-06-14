@@ -2,22 +2,32 @@ using Microsoft.WindowsAzure.Storage.Table;
 
 namespace tempaastapi.Models
 {
-    public class AlertConfigEntity : TableEntity {
+    public class AlertConfigEntity : TableEntity
+    {
 
-        public AlertConfigEntity() {
-            PartitionKey = "alertconfig";
-        }
+        public AlertConfigEntity() { }
 
-        public string firstName {get;set;}
-        public string lastName {get;set;}
-        public string phoneNumber {get;set;}
-       
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string phoneNumber { get; set; }
+        public string user_id { get; set; }
+        public string probe_id { get; set; }
+
     }
 
-    public class AlertConfig {
-        public string firstName {get;set;}
-        public string lastName {get;set;}
-        public string phoneNumber {get;set;}
-        public string id {get;set;}
+    public class AlertConfig
+    {
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string phoneNumber { get; set; }
+        public string probe_id { get; set; }
+    }
+
+    public class Alert {
+        public string phoneNumber { get; set; }
+        public string send_time {get; set;}
+        public string message_text {get;set;}
+        public string user_id {get;set;}
+
     }
 }

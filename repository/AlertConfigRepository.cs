@@ -16,16 +16,21 @@ namespace tempaastapi.repository
             _config = config;
         }
 
-        public List<AlertConfigEntity> GetAllAlertConfig(string partitionKey)
+        public List<AlertConfigEntity> GetAllAlertConfig(string user_id)
         {
             TableQuery<AlertConfigEntity> query = new TableQuery<AlertConfigEntity>().Where(
-            TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey));
+            TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, user_id));
 
             var tableClient = new AzureTableStorage<AlertConfigEntity>(_config["ConnectionStrings:StorageAccount"], _config["AlertConfigTable"]);
             return tableClient.GetMany(query).Result;
         }
 
-        public AlertConfigEntity UpdateAlertConfig(AlertConfig pc)
+        public List<Alert> GetRecentAlerts(string user_id, string startTime, string endTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        public AlertConfigEntity UpdateAlertConfig(AlertConfig pc, string user_id)
         {
             if (pc.phoneNumber != null || pc.phoneNumber != "")
             {
@@ -36,10 +41,13 @@ namespace tempaastapi.repository
                     Console.WriteLine("Successfully matched phone number");
                     var insert = new AlertConfigEntity()
                     {
-                        RowKey = pc.id,
+                        PartitionKey = user_id,
+                        RowKey = $"{pc.probe_id}_{pc.phoneNumber}",
                         firstName = pc.firstName,
                         lastName = pc.lastName,
-                        phoneNumber = pc.phoneNumber
+                        phoneNumber = pc.phoneNumber,
+                        probe_id = pc.probe_id,
+                        user_id = user_id
                     };
 
                     var tableClient = new AzureTableStorage<AlertConfigEntity>(_config["ConnectionStrings:StorageAccount"], _config["AlertConfigTable"]);

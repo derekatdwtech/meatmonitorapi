@@ -3,11 +3,13 @@ using tempaastapi.Models;
 using tempaastapi.repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace tempaastapi.Controllers
 {
     [ApiController]
-    [Route("alert/")]
+    [Route("api/alert")]
     public class AlertConfigController : ControllerBase
     {
         private readonly ILogger<AlertConfigController> _logger;
@@ -18,22 +20,35 @@ namespace tempaastapi.Controllers
             _acr = acr;
         }
 
-// CONFIGURATIONS
-        [HttpGet("config/{key}")]
+        // ALERTS
+        [HttpGet("")]
+        [Authorize]
+        public List<Alert> GetRecentAlerts(string startTime, string endTime)
+        {
+            return new List<Alert>();
+        }
+
+        // CONFIGURATIONS
+        [HttpGet("config")]
+        [Authorize]
         public List<AlertConfigEntity> GetAll(string key)
         {
             return _acr.GetAllAlertConfig(key);
-           
+
         }
 
         [HttpPost("config")]
-        public AlertConfigEntity UpdateAlertConfig(AlertConfig pc) {
-            return _acr.UpdateAlertConfig(pc);
+        [Authorize]
+        public AlertConfigEntity UpdateAlertConfig(AlertConfig pc)
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value.Split("|")[1];
+            return _acr.UpdateAlertConfig(pc, userId);
         }
-        
-// SUPPRESSIONS
+
+        // SUPPRESSIONS
         [HttpGet("{key}/suppressions")]
-        public string GetAlertSuppressions(string key) {
+        public string GetAlertSuppressions(string key)
+        {
             return key;
         }
 
