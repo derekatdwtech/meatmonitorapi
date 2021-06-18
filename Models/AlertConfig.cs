@@ -23,11 +23,4 @@ namespace tempaastapi.Models
         public string probe_id { get; set; }
     }
 
-    public class Alert {
-        public string phoneNumber { get; set; }
-        public string send_time {get; set;}
-        public string message_text {get;set;}
-        public string user_id {get;set;}
-
-    }
 }

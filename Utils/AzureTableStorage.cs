@@ -77,7 +77,7 @@ namespace tempaastapi.utils
             var response = await table.ExecuteQuerySegmentedAsync(query, continuationToken);
             continuationToken = response.ContinuationToken;
             results.AddRange(response.Results);
-        } while (continuationToken != null);
+        } while (continuationToken != null && results.Count < query.TakeCount);
 
         return results;
     }

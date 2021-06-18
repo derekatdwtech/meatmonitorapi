@@ -20,14 +20,6 @@ namespace tempaastapi.Controllers
             _acr = acr;
         }
 
-        // ALERTS
-        [HttpGet("")]
-        [Authorize]
-        public List<Alert> GetRecentAlerts(string startTime, string endTime)
-        {
-            return new List<Alert>();
-        }
-
         // CONFIGURATIONS
         [HttpGet("config")]
         [Authorize]
@@ -44,6 +36,15 @@ namespace tempaastapi.Controllers
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value.Split("|")[1];
             return _acr.UpdateAlertConfig(pc, userId);
+        }
+
+// ALERT HISTORY
+        [HttpGet("history")]
+        [Authorize]
+        public List<AlertHistory> GetAlertHistory(int count) {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value.Split("|")[1];
+            return _acr.GetRecentAlerts(userId, count);
+
         }
 
         // SUPPRESSIONS

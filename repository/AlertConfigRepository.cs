@@ -25,9 +25,15 @@ namespace tempaastapi.repository
             return tableClient.GetMany(query).Result;
         }
 
-        public List<Alert> GetRecentAlerts(string user_id, string startTime, string endTime)
+        public List<AlertHistory> GetRecentAlerts(string user_id, int count)
         {
-            throw new NotImplementedException();
+            var tableClient = new AzureTableStorage<AlertHistory>(_config["ConnectionStrings:StorageAccount"], _config["AlertHistoryTable"]);
+            TableQuery<AlertHistory> query = new TableQuery<AlertHistory>().Where(
+
+                    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, user_id)
+            ).Take(count);
+
+            return tableClient.GetMany(query).Result;
         }
 
         public AlertConfigEntity UpdateAlertConfig(AlertConfig pc, string user_id)
