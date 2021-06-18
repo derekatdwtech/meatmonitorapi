@@ -30,7 +30,7 @@ namespace tempaastapi.Controllers
             // string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             // Console.WriteLine($"From COntroller {userId}");
             var result = _pcr.GetProbeConfig(_config["UserId"], probeId);
-            if (result != null)
+            if (result.Count > 0)
             {
                 return Ok(result);
             }

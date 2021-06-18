@@ -24,10 +24,18 @@ namespace tempaastapi.repository
             return tableClient.GetMany(query).Result;
         }
 
-        public ProbeConfig GetProbeConfig(string partitionKey, string rowKey)
+        public List<ProbeConfig> GetProbeConfig(string partitionKey, string rowKey)
         {
+            TableQuery<ProbeConfig> query = new TableQuery<ProbeConfig>().Where(
+                TableQuery.CombineFilters(
+                    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey),
+                    TableOperators.And,
+                    TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, rowKey)
+                )
+
+            );
             var tableClient = new AzureTableStorage<ProbeConfig>(_config["ConnectionStrings:StorageAccount"], _config["ProbeConfigTable"]);
-            return tableClient.Get(partitionKey, rowKey).Result;
+            return tableClient.GetMany(query).Result;
         }
 
         public ProbeConfig UpdateProbeConfig(ProbeConfig pc)
